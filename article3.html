@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI転職で失敗しない！ポートフォリオの作り方完全ガイド | AI転職ナビ</title>
+  <meta name="description" content="企業の採用担当者が実際に評価するポートフォリオの構成とは？GitHubの整備からKaggle実績の見せ方まで徹底解説。">
+  <link rel="canonical" href="https://ai-tensyoku-navi.netlify.app/articles/article3.html">
+  <style>
+    :root{--primary:#1a1f36;--accent:#2563EB;--accent-light:#EFF6FF;--text:#111827;--text-secondary:#4B5563;--text-muted:#9CA3AF;--bg:#F9FAFB;--surface:#FFFFFF;--border:#E5E7EB;--radius:12px;}
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'Hiragino Kaku Gothic ProN','Noto Sans JP',-apple-system,sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.8;}
+    a{color:var(--accent);text-decoration:none;}a:hover{text-decoration:underline;}
+    header{background:var(--primary);padding:0 24px;}
+    .header-inner{max-width:860px;margin:0 auto;display:flex;align-items:center;height:56px;}
+    .logo{font-size:17px;font-weight:700;color:#fff;}.logo span{color:#60A5FA;}
+    .article-wrap{max-width:860px;margin:0 auto;padding:40px 24px;display:grid;grid-template-columns:1fr 280px;gap:40px;align-items:start;}
+    @media(max-width:768px){.article-wrap{grid-template-columns:1fr;padding:24px 16px;}.sidebar{display:none;}}
+    .breadcrumb{font-size:12px;color:var(--text-muted);margin-bottom:24px;}.breadcrumb a{color:var(--text-muted);}
+    .article-header{margin-bottom:32px;}
+    .article-cat{display:inline-block;background:var(--accent-light);color:var(--accent);font-size:12px;font-weight:700;padding:3px 10px;border-radius:4px;margin-bottom:12px;}
+    .article-header h1{font-size:clamp(20px,3vw,28px);font-weight:800;line-height:1.4;margin-bottom:16px;}
+    .article-meta{display:flex;gap:16px;font-size:13px;color:var(--text-muted);}
+    .article-body h2{font-size:20px;font-weight:700;margin:40px 0 16px;padding-left:12px;border-left:4px solid var(--accent);}
+    .article-body h3{font-size:17px;font-weight:700;margin:28px 0 12px;}
+    .article-body p{margin-bottom:16px;color:var(--text-secondary);}
+    .article-body ul,.article-body ol{margin:0 0 16px 20px;color:var(--text-secondary);}
+    .article-body li{margin-bottom:8px;}
+    .step-list{list-style:none;margin:0 0 24px 0;}
+    .step-list li{display:flex;gap:16px;padding:16px;background:var(--surface);border:1.5px solid var(--border);border-radius:8px;margin-bottom:10px;align-items:flex-start;}
+    .step-num{background:var(--accent);color:#fff;font-weight:800;font-size:14px;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+    .step-content h4{font-size:15px;font-weight:700;margin-bottom:4px;}
+    .step-content p{font-size:14px;color:var(--text-secondary);margin:0;}
+    .ng-box{background:#FEF2F2;border:1px solid #FECACA;border-radius:8px;padding:16px 20px;margin:24px 0;font-size:14px;color:#991B1B;}
+    .ng-box strong{display:block;margin-bottom:8px;}
+    .cta-box{background:var(--accent-light);border:2px solid var(--accent);border-radius:var(--radius);padding:24px;margin:40px 0;text-align:center;}
+    .cta-box h3{font-size:18px;font-weight:700;margin-bottom:8px;}
+    .cta-box p{font-size:14px;color:var(--text-secondary);margin-bottom:16px;}
+    .btn-primary{display:inline-block;background:var(--accent);color:#fff;font-size:15px;font-weight:700;padding:12px 32px;border-radius:8px;transition:background .2s;}
+    .btn-primary:hover{background:#1D4ED8;text-decoration:none;}
+    .sidebar-widget{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:24px;}
+    .widget-header{padding:12px 16px;border-bottom:1px solid var(--border);font-size:14px;font-weight:700;}
+    .widget-body{padding:16px;}
+    .related-item{padding:10px 0;border-bottom:1px solid var(--border);font-size:13px;}
+    .related-item:last-child{border-bottom:none;}
+    .related-item a{color:var(--text);font-weight:600;line-height:1.5;display:block;}
+    .related-item a:hover{color:var(--accent);text-decoration:none;}
+    footer{background:var(--primary);color:rgba(255,255,255,.5);padding:24px;text-align:center;font-size:12px;margin-top:40px;}
+  </style>
+</head>
+<body>
+<header><div class="header-inner"><a href="/" class="logo">AI転職<span>ナビ</span></a></div></header>
+
+<div class="article-wrap">
+  <main>
+    <div class="breadcrumb"><a href="/">トップ</a> &gt; <a href="/">転職コラム</a> &gt; ポートフォリオの作り方</div>
+
+    <div class="article-header">
+      <span class="article-cat">転職ノウハウ</span>
+      <h1>AI転職で失敗しない！<br>ポートフォリオの作り方完全ガイド</h1>
+      <div class="article-meta"><span>📅 2026年2月24日</span><span>⏱ 読了時間 約6分</span></div>
+    </div>
+
+    <div class="article-body">
+      <p>AI・機械学習エンジニアの転職において、ポートフォリオは最も重要な選考材料のひとつです。しかし「何を載せればいいかわからない」「GitHubをどう整備すれば評価されるのか」と悩む方も多いのではないでしょうか。採用担当者の視点から、評価されるポートフォリオの作り方を解説します。</p>
+
+      <h2>採用担当者が見ているポイント</h2>
+      <p>AI系企業の採用担当者へのヒアリングをもとに、実際に評価されるポイントをまとめました。技術力はもちろんですが、それ以上に「課題解決のプロセス」と「コードの読みやすさ」が重視されています。</p>
+      <ul>
+        <li>コードの質（読みやすさ・コメント・構造）</li>
+        <li>READMEの丁寧さ（背景・手順・結果が明確か）</li>
+        <li>解いた課題のビジネス的な意味</li>
+        <li>継続的なコミット履歴（活動頻度）</li>
+        <li>生成AI・LLM関連のプロジェクトの有無</li>
+      </ul>
+
+      <h2>ポートフォリオ作成の5ステップ</h2>
+      <ul class="step-list">
+        <li>
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h4>GitHubプロフィールを整備する</h4>
+            <p>プロフィール画像・自己紹介文・スキルセットを記載したREADMEを作成。ピン留めリポジトリを厳選して6つ以内に絞る。</p>
+          </div>
+        </li>
+        <li>
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h4>LLM・生成AI関連のプロジェクトを最低1つ作る</h4>
+            <p>Claude APIやOpenAI APIを使ったアプリ、RAGシステム、AIエージェントなど。小さくても「動くもの」があることが重要。</p>
+          </div>
+        </li>
+        <li>
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h4>各リポジトリのREADMEを充実させる</h4>
+            <p>「なぜ作ったか」「何の課題を解くか」「使い方」「工夫した点」を明記。スクリーンショットやデモGIFがあると評価が上がる。</p>
+          </div>
+        </li>
+        <li>
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h4>Kaggle実績があれば必ず記載する</h4>
+            <p>メダル獲得経験はもちろん、参加実績だけでも評価される。ノートブックを公開して「考え方のプロセス」を見せることが重要。</p>
+          </div>
+        </li>
+        <li>
+          <div class="step-num">5</div>
+          <div class="step-content">
+            <h4>ポートフォリオサイトを作る（任意）</h4>
+            <p>GitHubだけでなく、プロジェクト一覧をまとめたシンプルなWebページがあると印象が良い。GitHub PagesやNotionで簡単に作れる。</p>
+          </div>
+        </li>
+      </ul>
+
+      <h2>NGポートフォリオのパターン</h2>
+      <div class="ng-box">
+        <strong>❌ よくある失敗例</strong>
+        <ul style="margin:0 0 0 16px;color:#991B1B;">
+          <li>チュートリアルのコードをそのまま上げている</li>
+          <li>READMEが「TODO」のまま放置</li>
+          <li>コミット履歴が「first commit」1件だけ</li>
+          <li>エラーが出て動かないプロジェクトが含まれている</li>
+          <li>数年前のプロジェクトしかない</li>
+        </ul>
+      </div>
+
+      <h2>おすすめのプロジェクトアイデア</h2>
+      <h3>初〜中級者向け</h3>
+      <ul>
+        <li>自分の業務や日常の課題をLLMで解決するツール</li>
+        <li>特定ジャンルのドキュメントを検索できるRAGシステム</li>
+        <li>公開データセットを使った予測モデル＋Streamlitアプリ</li>
+      </ul>
+      <h3>中〜上級者向け</h3>
+      <ul>
+        <li>マルチエージェントシステムの実装</li>
+        <li>ファインチューニングの実験と結果比較</li>
+        <li>論文の再現実装とオリジナル改良</li>
+      </ul>
+
+      <div class="cta-box">
+        <h3>ポートフォリオを一緒に評価してもらう</h3>
+        <p>AI・ML専門のエージェントなら、ポートフォリオのフィードバックも無料で受けられます。転職前に客観的な評価を聞いてみましょう。</p>
+        <a href="/" class="btn-primary">無料でポートフォリオを評価してもらう →</a>
+      </div>
+    </div>
+  </main>
+
+  <aside class="sidebar">
+    <div class="sidebar-widget">
+      <div class="widget-header">📊 転職サービスランキング</div>
+      <div class="widget-body">
+        <p style="font-size:13px;color:var(--text-secondary);margin-bottom:12px">AI人材向けおすすめサービスはこちら</p>
+        <a href="/" class="btn-primary" style="display:block;text-align:center;font-size:13px;padding:10px">ランキングを見る →</a>
+      </div>
+    </div>
+    <div class="sidebar-widget">
+      <div class="widget-header">📝 関連記事</div>
+      <div class="widget-body">
+        <div class="related-item"><a href="article1.html">2026年AI人材の市場価値は？年収相場と転職成功のポイント</a></div>
+        <div class="related-item"><a href="article2.html">MLエンジニアとAIエンジニアの違いとは？</a></div>
+        <div class="related-item"><a href="article4.html">未経験からAIエンジニアへ転職した3人のリアルな体験談</a></div>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<footer><p>© 2026 AI転職ナビ. All rights reserved.</p></footer>
+</body>
+</html>

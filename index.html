@@ -698,10 +698,10 @@ const SERVICES = [
 ];
 
 const ARTICLES = [
-  {id:1,title:"2026年AI人材の市場価値は？年収相場と転職成功のポイント",excerpt:"生成AI・LLMエンジニアの需要が急増。各職種の年収レンジと、転職で評価されるスキルセットを詳しく解説します。",date:"2026-03-10",category:"市場動向",readTime:5,tag:"年収"},
-  {id:2,title:"MLエンジニアとAIエンジニアの違いとは？転職前に知っておくべきこと",excerpt:"混同されがちな2つの職種。求められるスキル・経験・年収の違いを徹底比較します。",date:"2026-03-03",category:"職種解説",readTime:4,tag:"職種比較"},
-  {id:3,title:"AI転職で失敗しない！ポートフォリオの作り方完全ガイド",excerpt:"企業の採用担当者が実際に評価するポートフォリオの構成とは？GitHubの整備からKaggle実績の見せ方まで解説。",date:"2026-02-24",category:"転職ノウハウ",readTime:6,tag:"ポートフォリオ"},
-  {id:4,title:"未経験からAIエンジニアへ転職した3人のリアルな体験談",excerpt:"文系出身・30代・育休明け。異なるバックグラウンドを持つ3人がどうやってAI転職を成功させたのかをインタビュー。",date:"2026-02-17",category:"体験談",readTime:8,tag:"体験談"}
+  {id:1,title:"2026年AI人材の市場価値は？年収相場と転職成功のポイント",excerpt:"生成AI・LLMエンジニアの需要が急増。各職種の年収レンジと、転職で評価されるスキルセットを詳しく解説します。",date:"2026-03-10",category:"市場動向",readTime:5,tag:"年収",url:"articles/article1.html"},
+  {id:2,title:"MLエンジニアとAIエンジニアの違いとは？転職前に知っておくべきこと",excerpt:"混同されがちな2つの職種。求められるスキル・経験・年収の違いを徹底比較します。",date:"2026-03-03",category:"職種解説",readTime:4,tag:"職種比較",url:"articles/article2.html"},
+  {id:3,title:"AI転職で失敗しない！ポートフォリオの作り方完全ガイド",excerpt:"企業の採用担当者が実際に評価するポートフォリオの構成とは？GitHubの整備からKaggle実績の見せ方まで解説。",date:"2026-02-24",category:"転職ノウハウ",readTime:6,tag:"ポートフォリオ",url:"articles/article3.html"},
+  {id:4,title:"未経験からAIエンジニアへ転職した3人のリアルな体験談",excerpt:"文系出身・30代・育休明け。異なるバックグラウンドを持つ3人がどうやってAI転職を成功させたのかをインタビュー。",date:"2026-02-17",category:"体験談",readTime:8,tag:"体験談",url:"articles/article4.html"}
 ];
 
 const FAQS = [
@@ -783,14 +783,14 @@ function renderCompareTable() {
 function renderArticles() {
   const list = document.getElementById('articleList');
   list.innerHTML = ARTICLES.slice(0, 4).map(a => `
-    <div class="article-item">
+    <a class="article-item" href="${a.url}" style="text-decoration:none;display:flex;flex-direction:column;gap:3px;">
       <div class="article-meta">
         <span class="article-cat">${a.category}</span>
         <span class="article-date">${a.date}</span>
       </div>
       <div class="article-title">${a.title}</div>
       <span class="article-read">読了時間 ${a.readTime}分</span>
-    </div>
+    </a>
   `).join('');
 }
 
