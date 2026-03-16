@@ -426,7 +426,14 @@
       grid-template-columns: repeat(2, 1fr);
       gap: 16px;
     }
-    @media(max-width: 600px) { .articles-grid { grid-template-columns: 1fr; } }
+    .articles-grid .article-card:last-child:nth-child(odd) {
+      grid-column: 1 / -1;
+      max-width: 50%;
+    }
+    @media(max-width: 600px) {
+      .articles-grid { grid-template-columns: 1fr; }
+      .articles-grid .article-card:last-child:nth-child(odd) { grid-column: auto; max-width: 100%; }
+    }
     .article-card {
       background: var(--surface);
       border: 1.5px solid var(--border);
