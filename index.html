@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -112,7 +113,9 @@
 
     /* ヒーロー */
     .hero {
-      background: linear-gradient(135deg, #1a1f36 0%, #1e3a5f 100%);
+      background:
+        linear-gradient(135deg, rgba(26,31,54,0.88) 0%, rgba(30,58,95,0.85) 100%),
+        url('https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=1400&q=80') center/cover no-repeat;
       color: #fff;
       padding: 64px 24px 56px;
       text-align: center;
@@ -260,9 +263,9 @@
     .card-top {
       display: flex;
       align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-bottom: 6px;
+      gap: 12px;
+      flex-wrap: nowrap;
+      margin-bottom: 8px;
     }
     .service-name {
       font-size: 17px;
@@ -373,8 +376,79 @@
     }
     .salary-highlight strong { color: var(--gold); font-size: 14px; }
 
-    /* サイドバー */
-    .sidebar { display: flex; flex-direction: column; gap: 24px; }
+    /* サービスロゴ */
+    .service-logo {
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+      object-fit: contain;
+      background: #fff;
+      border: 1px solid var(--border);
+      padding: 4px;
+      flex-shrink: 0;
+    }
+    .service-logo-placeholder {
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 800;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    /* 記事サムネイル */
+    .article-thumb {
+      width: 64px;
+      height: 48px;
+      border-radius: 6px;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+    .article-item-inner {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    .article-item-text { flex: 1; min-width: 0; }
+
+    /* 記事グリッド（メインエリア下部） */
+    .articles-grid-section {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 24px 40px;
+    }
+    .articles-grid-section h2 { font-size: 18px; font-weight: 700; margin-bottom: 16px; }
+    .articles-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+    @media(max-width: 600px) { .articles-grid { grid-template-columns: 1fr; } }
+    .article-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: box-shadow .2s, border-color .2s;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+    .article-card:hover { box-shadow: var(--shadow-md); border-color: var(--border-strong); }
+    .article-card-img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      display: block;
+    }
+    .article-card-body { padding: 14px; }
+    .article-card-cat { display: inline-block; background: var(--accent-light); color: var(--accent); font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px; margin-bottom: 8px; }
+    .article-card-title { font-size: 14px; font-weight: 700; line-height: 1.5; margin-bottom: 6px; }
+    .article-card-meta { font-size: 11px; color: var(--text-muted); }
 
     .widget {
       background: var(--surface);
@@ -668,6 +742,12 @@
   </aside>
 </div>
 
+<!-- 記事グリッド -->
+<section class="articles-grid-section">
+  <h2>📝 転職コラム</h2>
+  <div class="articles-grid" id="articlesGrid"></div>
+</section>
+
 <!-- FAQ -->
 <section class="faq-section" id="faq">
   <h2>よくある質問</h2>
@@ -689,19 +769,19 @@
 <script>
 // データ読み込み（実際のデプロイではフェッチに変える）
 const SERVICES = [
-  {id:1,rank:1,name:"レバテックキャリア",category:"転職エージェント",tags:["AI/ML","エンジニア","ハイクラス"],rating:4.8,reviews:3240,fee:"無料",avgSalary:"750万円〜",features:["AI・機械学習専門のアドバイザー","非公開求人80%以上","書類添削・面接対策無料"],badge:"編集部おすすめ",badgeColor:"#D97706",url:"#"},
-  {id:2,rank:2,name:"Geekly",category:"IT特化エージェント",tags:["AI","データサイエンス","エンジニア"],rating:4.6,reviews:2180,fee:"無料",avgSalary:"680万円〜",features:["IT・Web業界に完全特化","AIスタートアップ求人多数","最短2週間で内定"],badge:"AI求人No.1",badgeColor:"#2563EB",url:"#"},
-  {id:3,rank:3,name:"ビズリーチ",category:"スカウト型",tags:["ハイクラス","AI経営","CTO・VPoE"],rating:4.5,reviews:5820,fee:"一部有料",avgSalary:"900万円〜",features:["年収1000万以上の求人多数","企業から直接スカウト","AI・DX推進ポジション豊富"],badge:"年収アップ率高",badgeColor:"#7C3AED",url:"#"},
-  {id:4,rank:4,name:"doda",category:"総合転職サービス",tags:["AI","DX推進","未経験歓迎"],rating:4.3,reviews:8940,fee:"無料",avgSalary:"550万円〜",features:["AI関連求人5,000件以上","スキル診断ツール搭載","転職フェア定期開催"],badge:"求人数最多",badgeColor:"#059669",url:"#"},
-  {id:5,rank:5,name:"マイナビIT AGENT",category:"IT特化エージェント",tags:["AI","機械学習","第二新卒"],rating:4.2,reviews:1890,fee:"無料",avgSalary:"500万円〜",features:["第二新卒・若手AI人材に強い","研修制度充実企業を厳選","書類選考通過率80%以上"],badge:"若手AI人材向け",badgeColor:"#DC2626",url:"#"},
-  {id:6,rank:6,name:"パソナキャリア",category:"総合転職エージェント",tags:["AI","大手企業","ワークライフバランス"],rating:4.1,reviews:2340,fee:"無料",avgSalary:"600万円〜",features:["大手・優良企業のAI部門に強い","女性AI人材のサポート充実","離職率が低い企業を厳選"],badge:"定着率重視",badgeColor:"#0891B2",url:"#"}
+  {id:1,rank:1,name:"レバテックキャリア",category:"転職エージェント",tags:["AI/ML","エンジニア","ハイクラス"],rating:4.8,reviews:3240,fee:"無料",avgSalary:"750万円〜",features:["AI・機械学習専門のアドバイザー","非公開求人80%以上","書類添削・面接対策無料"],badge:"編集部おすすめ",badgeColor:"#D97706",url:"#",logoColor:"#0066CC",logoText:"LT"},
+  {id:2,rank:2,name:"Geekly",category:"IT特化エージェント",tags:["AI","データサイエンス","エンジニア"],rating:4.6,reviews:2180,fee:"無料",avgSalary:"680万円〜",features:["IT・Web業界に完全特化","AIスタートアップ求人多数","最短2週間で内定"],badge:"AI求人No.1",badgeColor:"#2563EB",url:"#",logoColor:"#1E40AF",logoText:"Gk"},
+  {id:3,rank:3,name:"ビズリーチ",category:"スカウト型",tags:["ハイクラス","AI経営","CTO・VPoE"],rating:4.5,reviews:5820,fee:"一部有料",avgSalary:"900万円〜",features:["年収1000万以上の求人多数","企業から直接スカウト","AI・DX推進ポジション豊富"],badge:"年収アップ率高",badgeColor:"#7C3AED",url:"#",logoColor:"#6D28D9",logoText:"BZ"},
+  {id:4,rank:4,name:"doda",category:"総合転職サービス",tags:["AI","DX推進","未経験歓迎"],rating:4.3,reviews:8940,fee:"無料",avgSalary:"550万円〜",features:["AI関連求人5,000件以上","スキル診断ツール搭載","転職フェア定期開催"],badge:"求人数最多",badgeColor:"#059669",url:"#",logoColor:"#047857",logoText:"dd"},
+  {id:5,rank:5,name:"マイナビIT AGENT",category:"IT特化エージェント",tags:["AI","機械学習","第二新卒"],rating:4.2,reviews:1890,fee:"無料",avgSalary:"500万円〜",features:["第二新卒・若手AI人材に強い","研修制度充実企業を厳選","書類選考通過率80%以上"],badge:"若手AI人材向け",badgeColor:"#DC2626",url:"#",logoColor:"#B91C1C",logoText:"MN"},
+  {id:6,rank:6,name:"パソナキャリア",category:"総合転職エージェント",tags:["AI","大手企業","ワークライフバランス"],rating:4.1,reviews:2340,fee:"無料",avgSalary:"600万円〜",features:["大手・優良企業のAI部門に強い","女性AI人材のサポート充実","離職率が低い企業を厳選"],badge:"定着率重視",badgeColor:"#0891B2",url:"#",logoColor:"#0E7490",logoText:"PC"}
 ];
 
 const ARTICLES = [
-  {id:1,title:"2026年AI人材の市場価値は？年収相場と転職成功のポイント",excerpt:"生成AI・LLMエンジニアの需要が急増。各職種の年収レンジと、転職で評価されるスキルセットを詳しく解説します。",date:"2026-03-10",category:"市場動向",readTime:5,tag:"年収",url:"articles/article1.html"},
-  {id:2,title:"MLエンジニアとAIエンジニアの違いとは？転職前に知っておくべきこと",excerpt:"混同されがちな2つの職種。求められるスキル・経験・年収の違いを徹底比較します。",date:"2026-03-03",category:"職種解説",readTime:4,tag:"職種比較",url:"articles/article2.html"},
-  {id:3,title:"AI転職で失敗しない！ポートフォリオの作り方完全ガイド",excerpt:"企業の採用担当者が実際に評価するポートフォリオの構成とは？GitHubの整備からKaggle実績の見せ方まで解説。",date:"2026-02-24",category:"転職ノウハウ",readTime:6,tag:"ポートフォリオ",url:"articles/article3.html"},
-  {id:4,title:"未経験からAIエンジニアへ転職した3人のリアルな体験談",excerpt:"文系出身・30代・育休明け。異なるバックグラウンドを持つ3人がどうやってAI転職を成功させたのかをインタビュー。",date:"2026-02-17",category:"体験談",readTime:8,tag:"体験談",url:"articles/article4.html"}
+  {id:1,title:"2026年AI人材の市場価値は？年収相場と転職成功のポイント",excerpt:"生成AI・LLMエンジニアの需要が急増。各職種の年収レンジと、転職で評価されるスキルセットを詳しく解説します。",date:"2026-03-10",category:"市場動向",readTime:5,tag:"年収",url:"articles/article1.html",thumb:"https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&q=80"},
+  {id:2,title:"MLエンジニアとAIエンジニアの違いとは？転職前に知っておくべきこと",excerpt:"混同されがちな2つの職種。求められるスキル・経験・年収の違いを徹底比較します。",date:"2026-03-03",category:"職種解説",readTime:4,tag:"職種比較",url:"articles/article2.html",thumb:"https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=400&q=80"},
+  {id:3,title:"AI転職で失敗しない！ポートフォリオの作り方完全ガイド",excerpt:"企業の採用担当者が実際に評価するポートフォリオの構成とは？GitHubの整備からKaggle実績の見せ方まで解説。",date:"2026-02-24",category:"転職ノウハウ",readTime:6,tag:"ポートフォリオ",url:"articles/article3.html",thumb:"https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&q=80"},
+  {id:4,title:"未経験からAIエンジニアへ転職した3人のリアルな体験談",excerpt:"文系出身・30代・育休明け。異なるバックグラウンドを持つ3人がどうやってAI転職を成功させたのかをインタビュー。",date:"2026-02-17",category:"体験談",readTime:8,tag:"体験談",url:"articles/article4.html",thumb:"https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400&q=80"}
 ];
 
 const FAQS = [
@@ -726,9 +806,14 @@ function renderRankings(services) {
       <div class="rank-num ${s.rank <= 3 ? rankColors[s.rank-1] : 'rank-num-other'}">${s.rank}</div>
       <div class="card-body">
         <div class="card-top">
-          <span class="service-name">${s.name}</span>
-          <span class="badge" style="background:${s.badgeColor}">${s.badge}</span>
-          <span class="category-tag">${s.category}</span>
+          <div class="service-logo-placeholder" style="background:${s.logoColor}">${s.logoText}</div>
+          <div>
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+              <span class="service-name">${s.name}</span>
+              <span class="badge" style="background:${s.badgeColor}">${s.badge}</span>
+            </div>
+            <span class="category-tag">${s.category}</span>
+          </div>
         </div>
         <div class="stars">
           <span class="star-icons">${stars(s.rating)}</span>
@@ -779,17 +864,37 @@ function renderCompareTable() {
   `).join('');
 }
 
-// 記事リスト
+// 記事リスト（サイドバー）
 function renderArticles() {
   const list = document.getElementById('articleList');
   list.innerHTML = ARTICLES.slice(0, 4).map(a => `
-    <a class="article-item" href="${a.url}" style="text-decoration:none;display:flex;flex-direction:column;gap:3px;">
-      <div class="article-meta">
-        <span class="article-cat">${a.category}</span>
-        <span class="article-date">${a.date}</span>
+    <a class="article-item" href="${a.url}" style="text-decoration:none;">
+      <div class="article-item-inner">
+        <img class="article-thumb" src="${a.thumb}" alt="${a.title}" loading="lazy">
+        <div class="article-item-text">
+          <div class="article-meta">
+            <span class="article-cat">${a.category}</span>
+            <span class="article-date">${a.date}</span>
+          </div>
+          <div class="article-title">${a.title}</div>
+        </div>
       </div>
-      <div class="article-title">${a.title}</div>
-      <span class="article-read">読了時間 ${a.readTime}分</span>
+    </a>
+  `).join('');
+}
+
+// 記事グリッド（メインエリア）
+function renderArticlesGrid() {
+  const grid = document.getElementById('articlesGrid');
+  if (!grid) return;
+  grid.innerHTML = ARTICLES.map(a => `
+    <a class="article-card" href="${a.url}">
+      <img class="article-card-img" src="${a.thumb}" alt="${a.title}" loading="lazy">
+      <div class="article-card-body">
+        <span class="article-card-cat">${a.category}</span>
+        <div class="article-card-title">${a.title}</div>
+        <div class="article-card-meta">${a.date}　読了 ${a.readTime}分</div>
+      </div>
     </a>
   `).join('');
 }
@@ -824,6 +929,7 @@ function toggleSidebar() {
 renderRankings(SERVICES);
 renderCompareTable();
 renderArticles();
+renderArticlesGrid();
 renderFAQ();
 setUpdateNotice();
 </script>
