@@ -872,11 +872,10 @@ const THUMBS = {
 };
 const DEFAULT_THUMB = "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=400&q=80";
 
-// 記事URLを生成（id1〜5は個別ページ、それ以降はjsonのみ）
+// 記事URLを生成（id1〜5は個別ページ、それ以降はリンクなし）
 function getArticleUrl(a) {
-  if (a.url) return a.url;
-  if (a.id <= 5) return `articles/article${a.id}.html`;
-  return '#';
+  if (a.id >= 1 && a.id <= 5) return `articles/article${a.id}.html`;
+  return null;
 }
 
 // 記事サムネイルを取得
@@ -960,8 +959,11 @@ function renderCompareTable() {
 // 記事リスト（サイドバー）
 function renderArticles(articles) {
   const list = document.getElementById('articleList');
-  list.innerHTML = articles.map(a => `
-    <a class="article-item" href="${getArticleUrl(a)}" style="text-decoration:none;">
+  list.innerHTML = articles.map(a => {
+    const url = getArticleUrl(a);
+    const tag = url ? `<a class="article-item" href="${url}" style="text-decoration:none;">` : `<div class="article-item">`;
+    const endTag = url ? `</a>` : `</div>`;
+    return `${tag}
       <div class="article-item-inner">
         <img class="article-thumb" src="${getThumb(a)}" alt="${a.title}" loading="lazy">
         <div class="article-item-text">
@@ -972,94 +974,37 @@ function renderArticles(articles) {
           <div class="article-title">${a.title}</div>
         </div>
       </div>
-    </a>
-  `).join('');
+    ${endTag}`;
+  }).join('');
 }
 
 // 記事グリッド（メインエリア）
 function renderArticlesGrid(articles) {
   const grid = document.getElementById('articlesGrid');
   if (!grid) return;
-  grid.innerHTML = articles.map(a => `
-    <a class="article-card" href="${getArticleUrl(a)}">
+  grid.innerHTML = articles.map(a => {
+    const url = getArticleUrl(a);
+    const tag = url ? `<a class="article-card" href="${url}">` : `<div class="article-card" style="cursor:default;">`;
+    const endTag = url ? `</a>` : `</div>`;
+    return `${tag}
       <img class="article-card-img" src="${getThumb(a)}" alt="${a.title}" loading="lazy">
       <div class="article-card-body">
         <span class="article-card-cat">${a.category}</span>
         <div class="article-card-title">${a.title}</div>
         <div class="article-card-meta">${a.date}　読了 ${a.readTime}分</div>
       </div>
-    </a>
-  `).join('');
+    ${endTag}`;
+  }).join('');
 }
 
 // 記事データ（静的）
 const ARTICLES = [
-  {
-    "id": 6,
-    "title": "30代からのAIエンジニア転職は遅い？成功事例と戦略",
-    "excerpt": "# 30代からのAIエンジニア転職成功のポイント  ## 年齢を強みに変える方法 30代の社会人経験は大きな武器です。ビジネス課題への理解力、プロジェクト管理能力、コミュニケーションスキルは、技術だけでなく実装後の運用まで見据えたAI開発において重要な差別化要因となります。  ## 技術習得のポイン…",
-    "date": "2026-03-29",
-    "category": "体験談",
-    "readTime": 6,
-    "tag": "30代転職",
-    "url": "articles/article1.html",
-    "thumb": "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=400&q=80"
-  },
-  {
-    "id": 5,
-    "title": "LLM・生成AI専門エンジニアの転職完全ガイド",
-    "excerpt": "## LLM・生成AI専門エンジニアの転職市場  ### 求められるスキルセット **技術スキル**として、Python/PyTorchによる機械学習実装、Transformer系モデルの理解、RAGやファインチューニング技術が必須です。AWS/GCP等のクラウド環境での大規模モデル運用経験も重視さ…",
-    "date": "2026-03-26",
-    "category": "職種解説",
-    "readTime": 7,
-    "tag": "生成AI",
-    "url": "articles/article5.html",
-    "thumb": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80"
-  },
-  {
-    "id": 1,
-    "title": "2026年AI人材の市場価値は？年収相場と転職成功のポイント",
-    "excerpt": "生成AI・LLMエンジニアの需要が急増。各職種の年収レンジと、転職で評価されるスキルセットを詳しく解説します。",
-    "date": "2026-03-10",
-    "category": "市場動向",
-    "readTime": 5,
-    "tag": "年収",
-    "url": "articles/article1.html",
-    "thumb": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&q=80"
-  },
-  {
-    "id": 2,
-    "title": "MLエンジニアとAIエンジニアの違いとは？転職前に知っておくべきこと",
-    "excerpt": "混同されがちな2つの職種。求められるスキル・経験・年収の違いを徹底比較し、あなたに合ったキャリアパスを提案します。",
-    "date": "2026-03-03",
-    "category": "職種解説",
-    "readTime": 4,
-    "tag": "職種比較",
-    "url": "articles/article2.html",
-    "thumb": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=400&q=80"
-  },
-  {
-    "id": 3,
-    "title": "AI転職で失敗しない！ポートフォリオの作り方完全ガイド",
-    "excerpt": "企業の採用担当者が実際に評価するポートフォリオの構成とは？GitHubの整備からKaggle実績の見せ方まで解説。",
-    "date": "2026-02-24",
-    "category": "転職ノウハウ",
-    "readTime": 6,
-    "tag": "ポートフォリオ",
-    "url": "articles/article3.html",
-    "thumb": "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&q=80"
-  },
-  {
-    "id": 4,
-    "title": "未経験からAIエンジニアへ転職した3人のリアルな体験談",
-    "excerpt": "文系出身・30代・育休明け。異なるバックグラウンドを持つ3人がどうやってAI転職を成功させたのかをインタビュー。",
-    "date": "2026-02-17",
-    "category": "体験談",
-    "readTime": 8,
-    "tag": "体験談",
-    "url": "articles/article4.html",
-    "thumb": "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400&q=80"
-  }
+  {id:6,title:"LLM・生成AI専門エンジニアの転職完全ガイド",excerpt:"LLM・生成AI専門エンジニアの需要が急増中。求められるスキルセット、年収相場、おすすめの転職サービスを解説します。",date:"2026-03-26",category:"職種解説",readTime:7,tag:"生成AI",url:"articles/article2.html"},
+  {id:1,title:"2026年AI人材の市場価値は？年収相場と転職成功のポイント",excerpt:"生成AI・LLMエンジニアの需要が急増。各職種の年収レンジと、転職で評価されるスキルセットを詳しく解説します。",date:"2026-03-10",category:"市場動向",readTime:5,tag:"年収",url:"articles/article1.html"},
+  {id:2,title:"MLエンジニアとAIエンジニアの違いとは？転職前に知っておくべきこと",excerpt:"混同されがちな2つの職種。求められるスキル・経験・年収の違いを徹底比較します。",date:"2026-03-03",category:"職種解説",readTime:4,tag:"職種比較",url:"articles/article2.html"},
+  {id:3,title:"AI転職で失敗しない！ポートフォリオの作り方完全ガイド",excerpt:"企業の採用担当者が実際に評価するポートフォリオの構成とは？GitHubの整備からKaggle実績の見せ方まで解説。",date:"2026-02-24",category:"転職ノウハウ",readTime:6,tag:"ポートフォリオ",url:"articles/article3.html"},
+  {id:4,title:"未経験からAIエンジニアへ転職した3人のリアルな体験談",excerpt:"文系出身・30代・育休明け。異なるバックグラウンドを持つ3人がどうやってAI転職を成功させたのかをインタビュー。",date:"2026-02-17",category:"体験談",readTime:8,tag:"体験談",url:"articles/article4.html"},
+  {id:5,title:"30代からのAIエンジニア転職は遅い？成功事例と具体的な戦略",excerpt:"戦略次第で30代は決して遅くありません。業界知識×AIという掛け合わせで差別化する方法を解説します。",date:"2026-02-10",category:"キャリア",readTime:6,tag:"30代転職",url:"articles/article5.html"}
 ];
 
 // 記事をロードして描画
