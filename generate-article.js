@@ -60,7 +60,12 @@ function generateArticleHtml(article, content) {
 
 function updateIndexHtml(articles) {
   let html = fs.readFileSync(INDEX_FILE, 'utf-8');
-  const articlesJson = JSON.stringify(articles.map(a => ({id:a.id,title:a.title,excerpt:a.excerpt,date:a.date,category:a.category,readTime:a.readTime,tag:a.tag})), null, 2);
+  const articlesData = articles.map(function(a) {
+    const obj = {id:a.id,title:a.title,excerpt:a.excerpt,date:a.date,category:a.category,readTime:a.readTime,tag:a.tag};
+    if (a.url) obj.url = a.url;
+    return obj;
+  });
+  const articlesJson = JSON.stringify(articlesData, null, 2);
   const newBlock = '// 記事データ（静的）\nconst ARTICLES = ' + articlesJson + ';\n\n// 記事をロードして描画\nfunction loadArticles() {\n  renderArticles(ARTICLES);\n  renderArticlesGrid(ARTICLES);\n}';
   html = html.replace(/\/\/ 記事データ（静的）[\s\S]*?function loadArticles\(\) \{[\s\S]*?\}/, newBlock);
   fs.writeFileSync(INDEX_FILE, html);
