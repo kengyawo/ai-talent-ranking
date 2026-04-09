@@ -97,14 +97,16 @@ async function generateArticle() {
     excerpt = title + 'について、転職を検討しているAI・機械学習エンジニア向けに詳しく解説します。';
   }
 
-  const newArticle = {id:newId,title,excerpt,date:now.toISOString().split('T')[0],category:theme.category,readTime:Math.floor(Math.random()*4)+4,tag:theme.tag};
+  const articleFileName = 'article' + newId + '.html';
+  const articleUrl = 'articles/' + articleFileName;
+  const newArticle = {id:newId,title,excerpt,date:now.toISOString().split('T')[0],category:theme.category,readTime:Math.floor(Math.random()*4)+4,tag:theme.tag,url:articleUrl};
 
   // 記事HTMLページを生成
   const articleHtml = generateArticleHtml(newArticle, content);
-  fs.writeFileSync(path.join(ARTICLES_DIR, 'article' + newId + '.html'), articleHtml);
-  console.log('記事ページ生成: article' + newId + '.html');
+  fs.writeFileSync(path.join(ARTICLES_DIR, articleFileName), articleHtml);
+  console.log('記事ページ生成: ' + articleFileName);
 
-  // articles.jsonを更新
+  // articles.jsonを更新（既存記事のurlも保持）
   articles.unshift(newArticle);
   if (articles.length > 20) articles.splice(20);
   fs.writeFileSync(ARTICLES_FILE, JSON.stringify(articles, null, 2));
