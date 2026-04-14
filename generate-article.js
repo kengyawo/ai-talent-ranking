@@ -45,11 +45,12 @@ function callAnthropicAPI(prompt) {
 
 function textToHtml(text) {
   return text.split('\n').map(line => {
-    if (line.startsWith('## ')) return '<h2>' + line.slice(3) + '</h2>';
-    if (line.startsWith('### ')) return '<h3>' + line.slice(4) + '</h3>';
-    if (line.startsWith('- ') || line.startsWith('・')) return '<li>' + line.slice(2) + '</li>';
+    if (line.startsWith('## ')) return '<h2>' + line.slice(3).replace(/\*\*(.+?)\*\*/g, '<u>$1</u>') + '</h2>';
+    if (line.startsWith('### ')) return '<h3>' + line.slice(4).replace(/\*\*(.+?)\*\*/g, '<u>$1</u>') + '</h3>';
+    if (line.startsWith('# ')) return '';
+    if (line.startsWith('- ') || line.startsWith('・')) return '<li>' + line.slice(2).replace(/\*\*(.+?)\*\*/g, '<u>$1</u>') + '</li>';
     if (line.trim() === '') return '';
-    return '<p>' + line + '</p>';
+    return '<p>' + line.replace(/\*\*(.+?)\*\*/g, '<u>$1</u>') + '</p>';
   }).join('\n').replace(/(<li>.*<\/li>\n?)+/g, match => '<ul>' + match + '</ul>');
 }
 
