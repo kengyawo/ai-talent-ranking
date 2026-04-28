@@ -81,12 +81,27 @@ async function generateArticle() {
   const maxId = Math.max(...articles.map(a => a.id));
   const newId = maxId + 1;
 
-  const recentTitles = articles.slice(-6).map(a => a.title);
-  const availableThemes = ARTICLE_THEMES.filter(t => !recentTitles.some(rt => rt.includes(t.tag)));
-  const theme = availableThemes[Math.floor(Math.random() * availableThemes.length)] || ARTICLE_THEMES[0];
-
   const now = new Date();
-  const title = theme.title.replace('{year}', now.getFullYear()).replace('{month}', now.getMonth() + 1);
+
+  // 既存記事のタイトル一覧（全件）を取得
+  const existingTitles = articles.map(a => a.title);
+
+  // テーマのタイトルを実際の文字列に展開して重複チェック
+  const availableThemes = ARTICLE_THEMES.filter(t => {
+    const resolvedTitle = t.title
+      .replace('{year}', now.getFullYear())
+      .replace('{month}', now.getMonth() + 1);
+    return !existingTitles.includes(resolvedTitle);
+  });
+
+  // 使えるテーマがなくなった場合は全テーマから選ぶ（ローテーション）
+  const themePool = availableThemes.length > 0 ? availableThemes : ARTICLE_THEMES;
+  const theme = themePool[Math.floor(Math.random() * themePool.length)];
+
+  const title = theme.title
+    .replace('{year}', now.getFullYear())
+    .replace('{month}', now.getMonth() + 1);
+
   console.log('[' + now.toISOString() + '] 記事生成開始: ' + title);
 
   let content = '';
